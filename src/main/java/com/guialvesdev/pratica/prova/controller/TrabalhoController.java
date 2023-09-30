@@ -45,6 +45,13 @@ public class TrabalhoController {
 
 
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Trabalho> buscarporid(@PathVariable Long id){
+        Trabalho obj = trabalhoService.findById(id);
+        return ResponseEntity.ok().body(obj);
+
+    }
+
 
 
 }

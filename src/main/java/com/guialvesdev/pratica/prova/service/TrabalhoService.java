@@ -3,6 +3,7 @@ package com.guialvesdev.pratica.prova.service;
 
 import com.guialvesdev.pratica.prova.exceptions.ObjectNotFoundException;
 import com.guialvesdev.pratica.prova.repository.TrabalhoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +17,8 @@ import java.util.Optional;
 public class TrabalhoService {
 
 
-
     @Autowired
     private TrabalhoRepository trabalhoRepository;
-
 
 
     @Transactional
@@ -32,7 +31,6 @@ public class TrabalhoService {
         entity.setDataHoraEntrega(obj.getDataHoraEntrega());
         entity.setJustificativa(obj.getJustificativa());
         return trabalhoRepository.save(entity);
-
 
 
 //        diminuir utilizando a classe mapper terceira ou mapear objeto e atributo
@@ -51,16 +49,12 @@ public class TrabalhoService {
 //        trabalhoRepository.saveAll(trabalhos);
 
 
-
     }
-
 
 
     public List<Trabalho> buscarTrabalhosPorPalavraChaveENota(String titulo, Integer notaMinima) {
         return trabalhoRepository.findBytituloContainingAndNotaGreaterThan(titulo, notaMinima);
     }
-
-
 
 
     // Get all users
@@ -77,7 +71,14 @@ public class TrabalhoService {
     }
 
 
+    public Trabalho atualizar(Long id, Trabalho trabalho) {
+        Trabalho trabalhoSalvo = findById(id);
 
+        BeanUtils.copyProperties(trabalho, trabalhoSalvo, "id");
+
+
+        return trabalhoRepository.save(trabalhoSalvo);
+    }
 
 
 }

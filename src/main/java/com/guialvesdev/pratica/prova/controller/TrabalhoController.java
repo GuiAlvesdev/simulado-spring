@@ -54,4 +54,12 @@ public class TrabalhoController {
 
 
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Trabalho> atualizar(@PathVariable Long id,@RequestBody Trabalho trabalho) {
+        Trabalho trabalhoSalvo = trabalhoService.atualizar(id, trabalho);
+        return ResponseEntity.ok(trabalhoSalvo);
+    }
+
+
+
 }
